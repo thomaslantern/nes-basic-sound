@@ -173,7 +173,6 @@ nmihandler:
 playnote:
 	jsr soundframe
 
-
 skipnote:
 
 	plp
@@ -412,21 +411,60 @@ forever:
 
 soundframe:
 
+	; This subroutine is only loaded via vblank
+	; and only if there are still notes to play
+
+	; Check first if a new note is needed
+	; If not, we simply decrease counter
+	; and move on
+
+	lda sqlen
+	bne decreasecount
+	
+	; note counter is zero
+	; so we need a new note
+	
+	ldx ctnt	; current note
+	inx
+
+	lda birthday_notes,x
+	sta ctnt
+	bne newnote
+
+;; CLEAN UP LOGIC HEREEEEEEEEEEEEE
+;; CHECK THAT WHOLE SOUNDFRAME
+
+
+silence:
+	; note is "zero", so stop music
+	lda #0
+	sta $4015
+	rts
+
+newnote:
+	; load up a new note		
+	txa
+	asl	; double value since using words
+	tax	; put back in x-register
+
+	lda birthday_notes,x
+	sta $4002
+	lda birthday_notes+1,x
+	sta $4003
+
+
+decreasecount:
+	ldx sqlen
+	dex
+	stx sqlen
+
 ;sqlen equ $7A	; counter for square note duration
 ;sqnt equ $7B	; note length
-;ctnt equ $7C  ; current note
+
 
 	
-	; get the frequency of the note
-	; if the note is "zero", turn off the sound
 
-; FIX THE LOGIC HERE!!!!!!!!!!
-	lda ctnt
-	beq play	;if the note is not zero, we play
 	rts 	; exit subroutine
-play:
-	ldx sqlen
-	beq newnote
 
 
 
