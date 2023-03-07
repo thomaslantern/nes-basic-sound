@@ -19,6 +19,7 @@ A1 equ $00
 As1 equ $01
 Bb1 equ $01
 B1 equ $02
+
 C2 equ $03
 Cs2 equ $04
 Db2 equ $04
@@ -169,16 +170,14 @@ nmihandler:
 	
 	ldx ctnt
 	cpx #0
-	;bne playnote
-	;jmp skipnote
+	beq playnote
+	jmp skipnote
 playnote:
 	jsr soundframe
 
 skipnote:
-
 	plp
 	pla
-
 	rti
 	
 
@@ -198,7 +197,7 @@ startgame:
 
 	stx $4010	; Disable DMC (sound samples)
 	lda #$40
-;	sta $4017	; Disable sound IRQ
+	sta $4017	; Disable sound IRQ
 	lda #0	
 waitvblank:
 	bit $2002	; check PPU Status to see if
@@ -382,7 +381,7 @@ musicsetup:
 	lda %10111111
 	sta $4000	; configure square 1
 	lda #$00
-	sta $4001	
+	sta $4001	; turn off sweeping on square 1
 
 	
 	
@@ -429,7 +428,7 @@ soundframe:
 	; and move on
 
 	lda sqlen
-	bne decreasecount
+	bne keepplaying
 	
 	; note counter is zero
 	; so we need a new note
@@ -448,16 +447,16 @@ soundframe:
 
 silence:
 	;note is "zero", so stop music
-;	lda #0
-;	sta $4015
-;	rts
+	lda #0
+	sta $4015
+	rts
 
 newnote:
 	; load up a new note		
 	txa
 	asl	; double value since using words
 	tax	; put back in x-register
-
+keepplaying:
 	lda notes,x
 	sta $4002
 	lda notes+1,x
@@ -507,7 +506,7 @@ backgrounddata_walls:
 	db $01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01
 
 backgrounddata_words:
-	db $09,$02,$11,$11,$1A			; HAPPY
+	db $09,$02,$02,$11,$1A			; HAPPY
 	db $03,$0A,$13,$15,$09,$05,$02,$1A	; BIRTHDAY
 	db $15,$10,$0E,$0E,$1A,$1C,$1C,$1C	; TOMMY!!!
 
