@@ -170,8 +170,8 @@ nmihandler:
 	
 	ldx ctnt
 	cpx #0
-	beq playnote
-	jmp skipnote
+	beq skipnote
+	
 playnote:
 	jsr soundframe
 
@@ -378,7 +378,7 @@ musicsetup:
 	; turn everything on
 	lda #$01
 	sta $4015	; turn on instruments
-	lda %10111111
+	lda %10011111
 	sta $4000	; configure square 1
 	lda #$00
 	sta $4001	; turn off sweeping on square 1
@@ -396,6 +396,7 @@ musicsetup:
 	sta $4002
 	lda notes+1,x
 	sta $4003
+
 
 		
 	lda birthday_length	; length of first note
@@ -443,13 +444,13 @@ soundframe:
 
 	lda ctnt
 	cmp #0
-	bne newnote
-
+	;bne newnote
+	jmp newnote
 silence:
 	;note is "zero", so stop music
-	lda #0
-	sta $4015
-	rts
+	;lda #0
+	;sta $4015
+	;rts
 
 newnote:
 	; load up a new note		
@@ -506,7 +507,7 @@ backgrounddata_walls:
 	db $01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01
 
 backgrounddata_words:
-	db $09,$02,$02,$11,$1A			; HAPPY
+	db $09,$02,$11,$11,$1A			; HAPPY
 	db $03,$0A,$13,$15,$09,$05,$02,$1A	; BIRTHDAY
 	db $15,$10,$0E,$0E,$1A,$1C,$1C,$1C	; TOMMY!!!
 
