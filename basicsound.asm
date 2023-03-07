@@ -157,7 +157,8 @@ Fs9 equ $5D
 
 sqlen equ $7A	; counter for square note duration
 sqnt equ $7B	; note length
-ctnt equ $7C  ; current note
+ctnt equ $7C  	; current note
+ntnum equ $7D	; number of current note
 
 nmihandler:
 	pha
@@ -168,8 +169,8 @@ nmihandler:
 	
 	ldx ctnt
 	cpx #0
-	bne playnote
-	jmp skipnote
+	;bne playnote
+	;jmp skipnote
 playnote:
 	jsr soundframe
 
@@ -197,7 +198,7 @@ startgame:
 
 	stx $4010	; Disable DMC (sound samples)
 	lda #$40
-	sta $4017	; Disable sound IRQ
+;	sta $4017	; Disable sound IRQ
 	lda #0	
 waitvblank:
 	bit $2002	; check PPU Status to see if
@@ -376,27 +377,36 @@ tommy:
 
 musicsetup:
 	; turn everything on
-	lda #$0F
-	sta $4000	; configure square 1
+	lda #$01
 	sta $4015	; turn on instruments
-	
-;sqlen equ $7A	; counter for square note duration
-;sqnt equ $7B	; note length
-;ctnt equ $7C  ; current note
+	lda %10111111
+	sta $4000	; configure square 1
+	lda #$00
+	sta $4001	
 
 	
 	
 	; load initial values
 	; then finally turn the screen on so music can play
 	lda birthday_notes
+	sta ctnt
 	asl	; double it since we're dealing with words	
 	tax	; put the value in x-register
-	stx ctnt	; put the value in current note
 
-	lda birthday_length
+	lda notes,x
+	sta $4002
+	lda notes+1,x
+	sta $4003
+
+		
+	lda birthday_length	; length of first note
 	sta sqnt
 	sta sqlen
+	
+	lda #0
+	sta ntnum		; number of note starts at zero
 
+	
 
 	lda #%00011110
 	sta $2001
@@ -424,22 +434,23 @@ soundframe:
 	; note counter is zero
 	; so we need a new note
 	
-	ldx ctnt	; current note
+	; increase number of note
+	ldx ntnum	
 	inx
+	stx ntnum
 
 	lda birthday_notes,x
 	sta ctnt
+
+	lda ctnt
+	cmp #0
 	bne newnote
 
-;; CLEAN UP LOGIC HEREEEEEEEEEEEEE
-;; CHECK THAT WHOLE SOUNDFRAME
-
-
 silence:
-	; note is "zero", so stop music
-	lda #0
-	sta $4015
-	rts
+	;note is "zero", so stop music
+;	lda #0
+;	sta $4015
+;	rts
 
 newnote:
 	; load up a new note		
@@ -447,9 +458,9 @@ newnote:
 	asl	; double value since using words
 	tax	; put back in x-register
 
-	lda birthday_notes,x
+	lda notes,x
 	sta $4002
-	lda birthday_notes+1,x
+	lda notes+1,x
 	sta $4003
 
 
@@ -457,12 +468,6 @@ decreasecount:
 	ldx sqlen
 	dex
 	stx sqlen
-
-;sqlen equ $7A	; counter for square note duration
-;sqnt equ $7B	; note length
-
-
-	
 
 	rts 	; exit subroutine
 
