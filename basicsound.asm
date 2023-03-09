@@ -430,11 +430,12 @@ soundframe:
 	; and move on
 
 	lda sqlen
-	bne keepplaying
+	bne decreasecount
 	
 	; note counter is zero
 	; so we need a new note
 	
+
 	; increase number of note
 	ldx ntnum	
 	inx
@@ -445,24 +446,48 @@ soundframe:
 
 	lda ctnt
 	cmp #0
-	;bne newnote
-	jmp newnote
+	bne newnote
+	
 silence:
+
+	
+	lda #$2A
+	sta $4002
+	lda #$02
+	sta $4003
+	lda #0
+	sta ctnt
+	jmp *
+
 	;note is "zero", so stop music
-	;lda #0
+	lda #0
 	;sta $4015
 	;rts
 
 newnote:
+	
+
+
 	; load up a new note		
+	ldx ntnum
+	lda birthday_length,x
+	sta sqlen	; length of new note
+
+	lda birthday_notes,x
+	sta ctnt
+
 	txa
 	asl	; double value since using words
 	tax	; put back in x-register
-keepplaying:
-	lda notes,x
+
+;	lda notes,x
+
 	sta $4002
-	lda notes+1,x
+	
+;	lda notes+1,x
+
 	sta $4003
+
 
 
 decreasecount:
