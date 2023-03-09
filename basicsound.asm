@@ -435,46 +435,37 @@ soundframe:
 	; note counter is zero
 	; so we need a new note
 	
-
 	; increase number of note
 	ldx ntnum	
 	inx
 	stx ntnum
-
+	
 	lda birthday_notes,x
 	sta ctnt
-
-	lda ctnt
+	
+	; make sure newest note is a note
 	cmp #0
 	bne newnote
 	
 silence:
 
 	
-	lda #$2A
-	sta $4002
-	lda #$02
-	sta $4003
-	lda #0
-	sta ctnt
-	jmp *
+	
 
 	;note is "zero", so stop music
 	lda #0
-	;sta $4015
-	;rts
+	sta $4015
+	rts
 
 newnote:
 	
-
 
 	; load up a new note		
 	ldx ntnum
 	lda birthday_length,x
 	sta sqlen	; length of new note
 
-	lda birthday_notes,x
-	sta ctnt
+	ldx ctnt
 
 	txa
 	asl	; double value since using words
