@@ -374,11 +374,14 @@ tommy:
 	sta $2005
 
 
+
+
+
 musicsetup:
 	; turn everything on
 	lda #$01
 	sta $4015	; turn on instruments
-	lda %10011111
+	lda #%11111111
 	sta $4000	; configure square 1
 	lda #$00
 	sta $4001	; turn off sweeping on square 1
@@ -396,8 +399,7 @@ musicsetup:
 	sta $4002
 	lda notes+1,x
 	sta $4003
-
-
+	
 		
 	lda birthday_length	; length of first note
 	sta sqnt
@@ -418,7 +420,6 @@ musicsetup:
 
 forever:
 	jmp forever
-
 soundframe:
 
 	; This subroutine is only loaded via vblank
