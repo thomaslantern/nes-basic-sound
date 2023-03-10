@@ -399,7 +399,7 @@ musicsetup:
 	sta $4002
 	lda notes+1,x
 	sta $4003
-	
+
 		
 	lda birthday_length	; length of first note
 	sta sqnt
@@ -409,17 +409,16 @@ musicsetup:
 	sta ntnum		; number of note starts at zero
 
 	
-
 	lda #%00011110
 	sta $2001
 	lda #$88
 	sta $2000
 
 
-
-
 forever:
 	jmp forever
+
+
 soundframe:
 
 	; This subroutine is only loaded via vblank
@@ -440,6 +439,7 @@ soundframe:
 	inx
 	stx ntnum
 	
+
 	lda birthday_notes,x
 	sta ctnt
 	
@@ -448,9 +448,6 @@ soundframe:
 	bne newnote
 	
 silence:
-
-	
-	
 
 	;note is "zero", so stop music
 	lda #0
@@ -471,11 +468,11 @@ newnote:
 	asl	; double value since using words
 	tax	; put back in x-register
 
-;	lda notes,x
+	lda notes,x
 
 	sta $4002
 	
-;	lda notes+1,x
+	lda notes+1,x
 
 	sta $4003
 
@@ -550,7 +547,7 @@ notes:
 birthday_notes:
 	db G3, G3, A3, G3, C4, B3
 	db G3, G3, A3, G3, D4, C4
-	db G3, G3, G4, E4, C4, B4, A4
+	db G3, G3, G4, E4, C4, B3, A3
 	db F4, F4, E4, C4, D4, C4
 	db 0
 
@@ -560,7 +557,7 @@ birthday_length:
 	db 30, 15, 45, 45, 45, 90
 	db 30, 15, 45, 45, 45, 90
 	db 30, 15, 45, 45, 45, 45, 90
-	db 30, 15, 45, 45, 45, 150
+	db 30, 15, 45, 45, 45, 105
 
 	org $FFFA
 	dw nmihandler
