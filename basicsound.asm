@@ -186,12 +186,12 @@ irqhandler:
 	rti
 
 startgame:
-	sei				; Disable interrupts
-	cld				; Clear decimal mode
+	sei			; Disable interrupts
+	cld			; Clear decimal mode
 
 	ldx #$ff	
-	txs				; Set-up stack
-	inx				; x is now 0
+	txs			; Set-up stack
+	inx			; x is now 0
 	stx $2000		; Disable/reset graphic options 
 	stx $2001		; Make sure screen is off
 	stx $4015		; Disable sound
@@ -202,9 +202,9 @@ startgame:
 	lda #0	
 waitvblank:
 	bit $2002		; check PPU Status to see if
-	bpl waitvblank	; vblank has occurred.
+	bpl waitvblank		; vblank has occurred.
 	lda #0
-clearmemory:		; Clear all memory info
+clearmemory:			; Clear all memory info
 	sta $0000,x
 	sta $0100,x
 	sta $0300,x
@@ -215,13 +215,13 @@ clearmemory:		; Clear all memory info
 	lda #$FF
 	sta $0200,x		; Load $FF into $0200 to 
 	lda #$00		; hide sprites 
-	inx				; x goes to 1, 2... 255
+	inx			; x goes to 1, 2... 255
 	cpx #$00		; loop ends after 256 times,
-	bne clearmemory ; clearing all memory
+	bne clearmemory 	; clearing all memory
 
 waitvblank2:
 	bit $2002		; Check PPU Status one more time
-	bpl waitvblank2	; before we start loading in graphics	
+	bpl waitvblank2		; before we start loading in graphics	
 	lda $2002
 	ldx #$3F
 	stx $2006
@@ -240,7 +240,7 @@ copypalloop:
 
 	ldx #0
 spriteload:
-	lda sprites,x	; Load tiles, x and y attributes
+	lda sprites,x		; Load tiles, x and y attributes
 	sta $0200,x
 	inx
 	cpx #$20
@@ -391,8 +391,8 @@ musicsetup:
 	; Then turn the screen on so music can play
 	lda birthday_notes
 	sta ctnt
-	asl	; Double it since we're dealing with words	
-	tax	; Put the value in x-register
+	asl		; Double it since we're dealing with words	
+	tax		; Put the value in x-register
 
 	lda notes,x 	; Lower half of note
 	sta $4002
@@ -404,7 +404,7 @@ musicsetup:
 	sta sqlen
 	
 	lda #0
-	sta ntnum		; Number of note starts at zero
+	sta ntnum	; Number of note starts at zero
 
 	; Turn the screen on
 	lda #%00011110
@@ -462,8 +462,8 @@ newnote:
 	ldx ctnt
 
 	txa
-	asl	; Double value since using words
-	tax	; Put back in x-register
+	asl		; Double value since using words
+	tax		; Put back in x-register
 
 	lda notes,x
 	sta $4002
@@ -475,7 +475,7 @@ decreasecount:
 	dex
 	stx sqlen
 
-	rts 	; exit subroutine
+	rts 		; exit subroutine
 
 
 
