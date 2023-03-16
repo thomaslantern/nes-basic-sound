@@ -14,7 +14,9 @@
 	db 0
 	db 0,0,0,0,0,0,0
 
-
+; Stores "jump values" for notes as their note name
+; for readability, and to make easier tables of notes
+; for songs. ('s' for sharp, 'b' for flat)
 A1 equ $00
 As1 equ $01
 Bb1 equ $01
@@ -157,7 +159,6 @@ F9 equ $5C
 Fs9 equ $5D
 
 sqlen equ $7A	; counter for square note duration
-sqnt equ $7B	; note length
 ctnt equ $7C  	; current note
 ntnum equ $7D	; number of current note
 
@@ -185,22 +186,22 @@ irqhandler:
 	rti
 
 startgame:
-	sei		; Disable interrupts
-	cld		; Clear decimal mode
+	sei				; Disable interrupts
+	cld				; Clear decimal mode
 
 	ldx #$ff	
-	txs		; Set-up stack
-	inx		; x is now 0
-	stx $2000	; Disable/reset graphic options 
-	stx $2001	; Make sure screen is off
-	stx $4015	; Disable sound
+	txs				; Set-up stack
+	inx				; x is now 0
+	stx $2000		; Disable/reset graphic options 
+	stx $2001		; Make sure screen is off
+	stx $4015		; Disable sound
 
-	stx $4010	; Disable DMC (sound samples)
+	stx $4010		; Disable DMC (sound samples)
 	lda #$40
-	sta $4017	; Disable sound IRQ
+	sta $4017		; Disable sound IRQ
 	lda #0	
 waitvblank:
-	bit $2002	; check PPU Status to see if
+	bit $2002		; check PPU Status to see if
 	bpl waitvblank	; vblank has occurred.
 	lda #0
 clearmemory:		; Clear all memory info
@@ -212,14 +213,14 @@ clearmemory:		; Clear all memory info
 	sta $0600,x
 	sta $0700,x
 	lda #$FF
-	sta $0200,x	; Load $FF into $0200 to 
-	lda #$00	; hide sprites 
-	inx		; x goes to 1, 2... 255
-	cpx #$00	; loop ends after 256 times,
+	sta $0200,x		; Load $FF into $0200 to 
+	lda #$00		; hide sprites 
+	inx				; x goes to 1, 2... 255
+	cpx #$00		; loop ends after 256 times,
 	bne clearmemory ; clearing all memory
 
 waitvblank2:
-	bit $2002	; Check PPU Status one more time
+	bit $2002		; Check PPU Status one more time
 	bpl waitvblank2	; before we start loading in graphics	
 	lda $2002
 	ldx #$3F
@@ -233,10 +234,8 @@ copypalloop:
 	cpx #$20
 	bcc copypalloop
 
-	lda $2002
-
 	
-	ldx #$02 	; Set SPR-RAM address to 0
+	ldx #$02 	
 	stx $4014
 
 	ldx #0
@@ -255,10 +254,10 @@ spriteload:
 	lda $2002
 	lda #$20
 	sta $2006
-	sta $09		; zero page - storing high byte here
+	sta $09			; Zero page - storing high byte here
 	lda #$09
 	sta $2006
-	sta $08		; zero page - storing low byte here
+	sta $08			; Zero page - storing low byte here
 
 bkgdouter:
 
@@ -282,7 +281,7 @@ bkgd:
 	adc #32
 	sta $08	
 	lda $09
-	adc #0	; if carry is set, should add to $09
+	adc #0		; If carry is set, should add to $09
 	sta $09	
 
 	sta $2006
@@ -296,9 +295,9 @@ bkgd:
 
 	ldx #0
 	lda $2002
-	lda #$22	; tile address is $2289
+	lda #$22	; High byte is $2289
 	sta $2006
-	lda #$89	; low byte of $2289
+	lda #$89	; Low byte of $2289
 	sta $2006
 bkgd_floor:
 	lda #$01	; Tile $01 is a brick
@@ -321,8 +320,7 @@ bkgd_words:		; "Happy Birthday Tommy!" tiles
 	sta $2006
 
 	ldx #0
-happy:
-	
+happy:				
 	lda backgrounddata_words,x
 	sta $2007
 	inx
@@ -338,8 +336,11 @@ happy:
 	sta $2006
 	lda $08
 	sta $2006
+
 birthday:
-	; do not reset x, keep going
+	; Continue working through list
+	; of birthday tiles
+
 	
 	lda backgrounddata_words,x
 	sta $2007
@@ -357,9 +358,9 @@ birthday:
 	lda $08
 	sta $2006
 
-
 tommy:
-	; do not reset x, keep going
+	; Continue working through list
+	; of birthday tiles
 	
 	lda backgrounddata_words,x
 	sta $2007
@@ -368,47 +369,44 @@ tommy:
 	bne tommy
 
 
+	; Reset scroll position to prevent
+	; background from scrolling
 	lda $2002
 	lda #$00
 	sta $2005
 	sta $2005
 
 
-
-
-
 musicsetup:
-	; turn everything on
+	; Initialization
 	lda #$01
-	sta $4015	; turn on instruments
+	sta $4015	; Turn on instruments
 	lda #%11111111
-	sta $4000	; configure square 1
+	sta $4000	; Configure square 1
 	lda #$00
-	sta $4001	; turn off sweeping on square 1
+	sta $4001	; Turn off sweeping on square 1
 
 	
-	
-	; load initial values
-	; then finally turn the screen on so music can play
+	; Load initial values
+	; Then turn the screen on so music can play
 	lda birthday_notes
 	sta ctnt
-	asl	; double it since we're dealing with words	
-	tax	; put the value in x-register
+	asl	; Double it since we're dealing with words	
+	tax	; Put the value in x-register
 
-	lda notes,x
+	lda notes,x 	; Lower half of note
 	sta $4002
-	lda notes+1,x
+	lda notes+1,x 	; Higher half of note
 	sta $4003
 
-		
-	lda birthday_length	; length of first note
-	sta sqnt
+	; Length of first note
+	lda birthday_length	
 	sta sqlen
 	
 	lda #0
-	sta ntnum		; number of note starts at zero
+	sta ntnum		; Number of note starts at zero
 
-	
+	; Turn the screen on
 	lda #%00011110
 	sta $2001
 	lda #$88
@@ -431,10 +429,9 @@ soundframe:
 	lda sqlen
 	bne decreasecount
 	
-	; note counter is zero
-	; so we need a new note
-	
-	; increase number of note
+	; sqlen is zero, so we
+	; need a new note
+	; Increase note counter
 	ldx ntnum	
 	inx
 	stx ntnum
@@ -443,13 +440,13 @@ soundframe:
 	lda birthday_notes,x
 	sta ctnt
 	
-	; make sure newest note is a note
+	; Make sure newest note is a note
 	cmp #0
 	bne newnote
 	
 silence:
 
-	;note is "zero", so stop music
+	; Note is "zero", so stop music
 	lda #0
 	sta $4015
 	rts
@@ -457,26 +454,21 @@ silence:
 newnote:
 	
 
-	; load up a new note		
+	; Load up a new note		
 	ldx ntnum
 	lda birthday_length,x
-	sta sqlen	; length of new note
+	sta sqlen	; Length of new note
 
 	ldx ctnt
 
 	txa
-	asl	; double value since using words
-	tax	; put back in x-register
+	asl	; Double value since using words
+	tax	; Put back in x-register
 
 	lda notes,x
-
 	sta $4002
-	
 	lda notes+1,x
-
 	sta $4003
-
-
 
 decreasecount:
 	ldx sqlen
@@ -488,10 +480,13 @@ decreasecount:
 
 
 initial_palette:
-	db $2A,$27,$0F,$1A  ; Background palettes
+	; Background palettes
+	db $2A,$27,$0F,$1A  
 	db $2A,$23,$33,$1A
 	db $2A,$22,$33,$1A
 	db $2A,$27,$31,$1A
+
+	; Sprite palettes
 	db $0F,$0F,$27,$16  ; bomb palette
 	db $0F,$27,$16,$11  ; cake palette
 	db $0F,$07,$27,$25  ; girl palette
@@ -525,31 +520,32 @@ backgrounddata_words:
 	db $03,$0A,$13,$15,$09,$05,$02,$1A	; BIRTHDAY
 	db $15,$10,$0E,$0E,$1A,$1C,$1C,$1C	; TOMMY!!!
 
-
+; Table of different notes and their values
 notes:	
-	dw $07F1, $0780, $0713 				; A1 to B1 ($00-$02)
+	dw $07F1, $0780, $0713 						; A1 to B1 ($00-$02)
 	dw $06AD, $064D, $05F3, $059D, $054D, $0500	; C2 to F2 ($03-$08)
-	dw $04B8, $0475, $0435, $03F8, $03BF, $0389 	; F#2 to B2 ($09-$0E)
+	dw $04B8, $0475, $0435, $03F8, $03BF, $0389 ; F#2 to B2 ($09-$0E)
 	dw $0356, $0326, $02F9, $02CE, $02A6, $027F	; C3 to F3 ($0F-$15)
-	dw $025C, $023A, $021A, $01FB, $01DF, $01C4 	; F#3 to B3 ($16-$1A)
+	dw $025C, $023A, $021A, $01FB, $01DF, $01C4 ; F#3 to B3 ($16-$1A)
 	dw $01AB, $0193, $017C, $0167, $0151, $013F	; C4 to F4 ($1B-$20)
-	dw $012D, $011C, $010C, $00FD, $00EF, $00E2 	; F#4 to B4 ($20-$26)
+	dw $012D, $011C, $010C, $00FD, $00EF, $00E2 ; F#4 to B4 ($20-$26)
 	dw $00D2, $00C9, $00BD, $00B3, $00A9, $009F	; C5 to F5 ($27-$2C)
-	dw $0096, $008E, $0086, $007E, $0077, $0070 	; F#5 to B5 ($2D-$32)
+	dw $0096, $008E, $0086, $007E, $0077, $0070 ; F#5 to B5 ($2D-$32)
 	dw $006A, $0064, $005E, $0059, $0054, $004F	; C6 to F6 ($33-$38)
-	dw $004B, $0046, $0042, $003F, $003B, $0038 	; F#6 to B6 ($39-$3E)
+	dw $004B, $0046, $0042, $003F, $003B, $0038 ; F#6 to B6 ($39-$3E)
 	dw $0034, $0031, $002F, $002C, $0029, $0027	; C7 to F7 ($3F-$45)
-	dw $0025, $0023, $0021, $001F, $001D, $001B 	; F#7 to B7 ($46-$4A)
+	dw $0025, $0023, $0021, $001F, $001D, $001B ; F#7 to B7 ($46-$4A)
 	dw $001A, $0018, $0017, $0015, $0014, $0013	; C8 to F8 ($4B-$50)
-	dw $0012, $0011, $0010, $000F, $000E, $000D 	; F#8 to B8 ($51-$56)
+	dw $0012, $0011, $0010, $000F, $000E, $000D ; F#8 to B8 ($51-$56)
 	dw $000C, $000C, $000B, $000A, $000A, $0009, $0008 ; C9 to F#9 ($57-$5D)
 
+; Notes to the song ("Happy Birthday")
 birthday_notes:
 	db G3, G3, A3, G3, C4, B3
 	db G3, G3, A3, G3, D4, C4
 	db G3, G3, G4, E4, C4, B3, A3
 	db F4, F4, E4, C4, D4, C4
-	db 0
+	db 0 ; Zero indicates song is over
 
 birthday_length:
 	
@@ -568,7 +564,7 @@ chr_rom_start:
 
 background_tile_start:
 
-	db %00000000	; Blank tile - do I need this?
+	db %00000000	; Blank tile
 	db %00000000
 	db %00000000
 	db %00000000
@@ -967,6 +963,8 @@ background_tile_end:
 
 
 sprite_tile_start:
+	
+	; (Numbers in brackets indicate tile #)
 
 	db %00000000	; "Cake" (0)
 	db %00011100
@@ -1465,4 +1463,3 @@ chr_rom_end:
 
 ; Pad chr-rom to 8k(to make valid file)
 	ds 8192-(chr_rom_end-chr_rom_start)
-
