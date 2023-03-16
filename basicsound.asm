@@ -1,4 +1,4 @@
-	; Basic Graphics Program
+	; Basic Sound Program (plays "Happy Birthday")
 	; by Thomas Wesley Scott, 2023
 
 	; Code starts at $C000.
