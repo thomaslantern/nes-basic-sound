@@ -1,8 +1,6 @@
 # nes-basic-sound
 Basic sound program for the NES (Nintendo Entertainment System) using VASM compiler
 
-<h1>still UNDER CONSTRUCTION</h1>
-
 This is a pretty basic program for making sound on the NES (Nintendo Entertainment System). It is a simple, static screen, which contains both background tiles and "foreground tiles" AKA sprites, and plays some music ("Happy Birthday").
 
 <h1> How to Compile "basicsound.asm" </h1>
@@ -14,5 +12,5 @@ Assuming you've successfully followed the steps to compile above, you should now
 <h1>How to Use (and Learn From) "basicsound.asm"</h1>
 While it's maybe not the most exciting program (whoever heard of a game that's just a static screen?), there's lots to be learned from this program! In particular, aside from learning how to put graphics on the screen of an NES game, you can modify the tiles yourself and make your own graphics! The "0"s and "1"s you see at the end of the code (in the "chr_rom_start" section near the end) are all the tiles - try changing some of the zeroes and ones around and see what happens!
 
-
-<h1>insert thing about compiler comparisons</h1>
+<h1>Differences in Compilers</h1>
+A lot of NES programmers use a different compiler than VASM, ca65 (which is a companion assembler to the cc65 crosscompiler). As a consequence, their code will look a little different than what you see here; in particular, the layout of where all of the code is placed will be different. For the sake of learning the code from this tutorial, please don't worry about it for now. At first I found it a bit confusing, but I found that once I understood the basic code and its layout using the VASM compiler, reading code for the ca65 was nearly effortless. I'm confident the same will happen for you! For now just focus on learning with VASM and you can always make the switch later if necessary. 
