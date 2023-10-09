@@ -13,9 +13,9 @@ If you're looking to compile the code, you'll need to use the VASM compiler. You
 Assuming you've successfully followed the steps to compile above, you should now have an .nes file, "basicsound.nes". This file can be run in any NES (Nintendo Entertainment System) emulator. I tend to use Nestopia, but other NES developers really seem to enjoy FCEUX, so use whichever emulator you like to run it!
 
 <h1>How to Use (and Learn From) "basicsound.asm"</h1>
-So this "game" (and I use the term generously) is only a mild step up from our basic graphics tutorial. Now instead of a static screen, we've got a static screen with sound. While I guess that's an improvement, right? Ever wanted to give a friend an NES cartridge that was a birthday card? This tutorial is pretty much exactly that! Of course, to do anything useful with it, we must be able to learn from the code, maybe even make some modifications. Wouldn't that be grand? Well, let me give you the tour...
+So this "game" (and I use the term generously) is only a mild step up from our basic graphics tutorial: instead of a static screen, we've got a static screen with sound. I guess that's an improvement, right? Ever wanted to give a friend an NES cartridge that was a birthday card? This tutorial is pretty much exactly that! Of course, to do anything useful with it, we must be able to learn from the code, maybe even make some modifications. Wouldn't that be grand? Well, let me give you the tour...
 
-<p>Before we go further, I would recommend you check out my "Basic Graphics" and "Hello World" tutorial for the NES, as they cover a lot of the initial steps needed to go over what we're doing here. Once you've done that, you're ready to start learning about NES sound and how we can make some cool noise!</p>
+<p>Before we go further, I would recommend you check out my "Hello World" (https://github.com/thomaslantern/hello-world) and "Basic Graphics" (https://github.com/thomaslantern/nes-basic-graphics) tutorials for the NES, as they cover a lot of the initial steps needed to go over what we're doing here. Once you've done that, you're ready to start learning about NES sound and how we can make some cool noise!</p>
 
 <h2>How Sound works on the NES</h2>
 (coming soon!)
