@@ -18,5 +18,6 @@ Assuming you've successfully followed the steps to compile above, you should now
 <p>Before we go further, I would recommend you check out my "Hello World" (https://github.com/thomaslantern/hello-world) and "Basic Graphics" (https://github.com/thomaslantern/nes-basic-graphics) tutorials for the NES, as they cover a lot of the initial steps needed to go over what we're doing here. Once you've done that, you're ready to start learning about NES sound and how we can make some cool noise!</p>
 
 <h2>How Sound works on the NES</h2>
-(coming soon!)
+For the sake of this tutorial, we will be skipping some of the more in-depth programming (I'm looking at you, DMC samples), but we'll briefly go over how the addressing for sound works on the NES.
+(more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
