@@ -18,6 +18,16 @@ Assuming you've successfully followed the steps to compile above, you should now
 <p>Before we go further, I would recommend you check out my "Hello World" (https://github.com/thomaslantern/hello-world) and "Basic Graphics" (https://github.com/thomaslantern/nes-basic-graphics) tutorials for the NES, as they cover a lot of the initial steps needed to go over what we're doing here. Once you've done that, you're ready to start learning about NES sound and how we can make some cool noise!</p>
 
 <h2>How Sound works on the NES</h2>
-For the sake of this tutorial, we will be skipping some of the more in-depth programming (I'm looking at you, DMC samples), but we'll briefly go over how the addressing for sound works on the NES.
+<p>For the sake of this tutorial, we will be skipping some of the more in-depth programming (I'm looking at you, DMC samples), but we'll briefly go over how the addressing for sound works on the NES.</p>
+<p>This particular program uses only first sound channel of the NES, of which there are five:
+<ol>
+  <li>First Pulse Wave</li>
+  <li>Second Pulse Wave</li>
+  <li>Triangle Pulse Wave</li>
+  <li>Noise</li>
+  <li>DMC Sound Sample</li>
+</ol>
+The good news is that if you can understand how to use one channel, using any of the others shouldn't really be that difficult.</p>
+<p>So let's take a look at the first channel. To use it, we have to load values into the addresses from $4000 to $4003.</p>
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
