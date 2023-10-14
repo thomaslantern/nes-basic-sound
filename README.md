@@ -28,6 +28,9 @@ Assuming you've successfully followed the steps to compile above, you should now
   <li>DMC Sound Sample</li>
 </ol>
 The good news is that if you can understand how to use one channel, using any of the others shouldn't really be that difficult.</p>
-<p>So let's take a look at the first channel. To use it, we have to load values into the addresses from $4000 to $4003.</p>
+<p>So let's take a look at the first channel. To use it, we have to load values into the addresses from $4000 to $4003:
+<ul>
+  <li>$4000: Duty cycle and volume. Duty cycle is the "shape" of the sound/sine wave, and volume is fairly straightforward. By writing %11111111 (binary number 11111111) we get our instrument at full volume, with duty cycle 75%.</li>
+</ul></p>
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
