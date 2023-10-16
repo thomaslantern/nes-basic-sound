@@ -30,7 +30,12 @@ Assuming you've successfully followed the steps to compile above, you should now
 The good news is that if you can understand how to use one channel, using any of the others shouldn't really be that difficult.</p>
 <p>So let's take a look at the first channel. To use it, we have to load values into the addresses from $4000 to $4003:
 <ul>
-  <li>$4000: From left to right we have: Duty cycle (2 bits), envelope length (2 bits), and volume (4 bits). Duty cycle is the "shape" of the sound/sine wave, and volume is fairly straightforward. By writing %11111111 (binary number 11111111) we get our instrument at full volume, with duty cycle 75%. I don't honestly remember what the envelope length does exactly (I believe it's a timer of sorts that eventually expires and turns off the sound, so an alternate way of timing your notes rather than using the screen refresh to time them, as I did). I was told to set them to 11, so I did. As you can see, there's a lot to learn with every element of ASM6502, but keep at it! When in doubt, just try some values and see if they work - that kind of thinking has served me well so far with ASM6502, and it hasn't kept me from learning new things either!</li>
+  <li>$4000: From left to right we have: Duty cycle (2 bits), envelope length (2 bits), and volume (4 bits). 
+    <ul>
+      <li>Duty cycle is the "shape" of the sound/sine wave, and volume is fairly straightforward. By writing %11111111 (binary number 11111111) we get our instrument at full volume, with duty cycle 75%.</li>
+      <li>I don't honestly remember what the envelope length does exactly (I believe it's a timer of sorts that eventually expires and turns off the sound, so an alternate way of timing your notes rather than using the screen refresh to time them, as I did). I was told to set them to 11, so I did. As you can see, there's a lot to learn with every element of ASM6502, but keep at it! When in doubt, just try some values and see if they work - that kind of thinking has served me well so far with ASM6502, and it hasn't kept me from learning new things either!</li>
+    </ul>
+    </li>
 </ul></p>
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
