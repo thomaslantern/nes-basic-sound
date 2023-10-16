@@ -36,6 +36,9 @@ The good news is that if you can understand how to use one channel, using any of
       <li>I don't honestly remember what the envelope length does exactly (I believe it's a timer of sorts that eventually expires and turns off the sound, so an alternate way of timing your notes rather than using the screen refresh to time them, as I did). I was told to set them to 11, so I did. As you can see, there's a lot to learn with every element of ASM6502, but keep at it! When in doubt, just try some values and see if they work - that kind of thinking has served me well so far with ASM6502, and it hasn't kept me from learning new things either!</li>
     </ul>
     </li>
-</ul></p>
+</ul>
+<li>$4001: Sweeping. You can read more about that on NESDEV.org (see below), but I've got this turned off for now, as it's not relevant to this simple tutorial.</li>
+<li>$4002, $4003: Use these for the frequency of the note. We use all 8 bits of $4002 for the low part of the note, and the bottom three bits of $4003 for the highest 3 bits (11 bits in total for the note). (more soon!) </li>
+</p>
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
