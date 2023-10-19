@@ -38,7 +38,16 @@ The good news is that if you can understand how to use one channel, using any of
     </li>
 </ul>
 <li>$4001: Sweeping. You can read more about that on NESDEV.org (see below), but I've got this turned off for now, as it's not relevant to this simple tutorial.</li>
-<li>$4002, $4003: Use these for the frequency of the note. We use all 8 bits of $4002 for the low part of the note, and the bottom three bits of $4003 for the highest 3 bits (11 bits in total for the note). (more soon!) </li>
+<li>$4002, $4003: Use these for the frequency of the note. We use all 8 bits of $4002 for the low part of the note, and the bottom three bits of $4003 for the highest 3 bits (11 bits in total for the note). The formula for figuring out the frequency of the note is: 
+  <pre><code>
+  P = C / (F * 16) + 1    
+  </code></pre></li>
+  Where F is the frequency (in Hz), and C is the number of cycles for the NES per second (~1790000 for US/JPN NES, ~1662607 for Europe/others). So for A = 440 Hz, you would do: 
+  <pre><code>
+    P = 1790000 / (440 * 16) + 1
+      = 1790000 / 7040  + 1
+      ~= 255 
+  </code></pre>
 </p>
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
