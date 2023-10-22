@@ -48,6 +48,14 @@ The good news is that if you can understand how to use one channel, using any of
       = 1790000 / 7040  + 1
       ~= 255 
   </code></pre>
+  And so we would load #$FF (or 255) into $4002, and load #0 into $4003. For A = 220 Hz, you would do:
+  
+  <pre><code>
+    P = 1790000 / (220 * 16) + 1
+      = 1790000 / 3520  + 1
+      ~= 509, which is hex $1FD, 
+  </code></pre>
+  so you would load #$FD into $4002, and load #$01 into $4003. Hopefully that makes sense!
 </p>
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
