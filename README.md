@@ -57,5 +57,9 @@ The good news is that if you can understand how to use one channel, using any of
   </code></pre>
   so you would load #$FD into $4002, and load #$01 into $4003. Hopefully that makes sense!
 </p>
+<h2>Turn the Sound On</h2>
+<p>
+Of course, we can't actually have music or sound without turning the sound on. For that we need $4015. To do this we can write $01 to $4015 using <code>LDA #$01</code> followed by <code>STA $4015</code>. This turns on the one instrument we are using for this tutorial.
+</p>
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
