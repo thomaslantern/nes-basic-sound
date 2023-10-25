@@ -61,5 +61,10 @@ The good news is that if you can understand how to use one channel, using any of
 <p>
 Of course, we can't actually have music or sound without turning the sound on. For that we need $4015. To do this we can write $01 to $4015 using <code>LDA #$01</code> followed by <code>STA $4015</code>. This turns on the one instrument we are using for this tutorial.
 </p>
+
+## Tables for Notes
+It's great to have the sound on, but if there are no notes to be played, how will you know the difference? We need some notes, and for that our best friend will be an **LUT** (_look up table_). Look up tables or LUTs allow us to store our notes in a sequential way, that makes it easy as a programmer to read the order of the notes, and how they're going to be played in the song. In short, having LUTs allows us to loop in our code, which makes it much easier to read, modify, and understand. And who doesn't love easier to read code!
+(example coming soon!)
+
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
