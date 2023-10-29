@@ -87,7 +87,14 @@ notes:
 	dw $000C, $000C, $000B, $000A, $000A, $0009, $0008 ; C9 to F#9 ($57-$5D)
 </code></pre>
 
-(example coming soon!)
-
+To use this table, we must be a bit careful. Because each of these notes is a word (2 bytes), the way we access them requires us to double the number of the note required to actually access the right data from the table. We also want to put this value into our x register so we can index to the correct note. For example, if we want the first note, we need to store 2 in x:
+<pre><code>
+	ldx #2 		; Store 2 in x register
+	lda notes,x 	; Load the bottom value of the first note
+	sta $4002	; Store the bottom half of the note
+	lda notes+1,x	; Load the upper value of the first note
+	sta $4003	; Store the upper half of the note
+</code></pre>
+(more detail on this soon!)
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
