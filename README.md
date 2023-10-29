@@ -63,7 +63,30 @@ Of course, we can't actually have music or sound without turning the sound on. F
 </p>
 
 ## Tables for Notes
-It's great to have the sound on, but if there are no notes to be played, how will you know the difference? We need some notes, and for that our best friend will be an **LUT** (_look up table_). Look up tables or LUTs allow us to store our notes in a sequential way, that makes it easy as a programmer to read the order of the notes, and how they're going to be played in the song. In short, having LUTs allows us to loop in our code, which makes it much easier to read, modify, and understand. And who doesn't love easier to read code!
+It's great to have the sound on, but if there are no notes to be played, how will you know the difference? We need some notes, and for that our best friend will be an **LUT** (_look up table_). Look up tables or LUTs allow us to store our notes in a sequential way, that makes it easy as a programmer to read the order of the notes, and how they're going to be played in the song. In short, having LUTs allows us to loop in our code, which makes it much easier to read, modify, and understand. And who doesn't love easier to read code?
+
+Here's a look up table for all the notes you might need for the NES:
+<pre><code>
+  ; Table of different notes and their values
+notes:	
+	dw $07F1, $0780, $0713 				; A1 to B1 ($00-$02)
+	dw $06AD, $064D, $05F3, $059D, $054D, $0500	; C2 to F2 ($03-$08)
+	dw $04B8, $0475, $0435, $03F8, $03BF, $0389 	; F#2 to B2 ($09-$0E)
+	dw $0356, $0326, $02F9, $02CE, $02A6, $027F	; C3 to F3 ($0F-$15)
+	dw $025C, $023A, $021A, $01FB, $01DF, $01C4 	; F#3 to B3 ($16-$1A)
+	dw $01AB, $0193, $017C, $0167, $0151, $013F	; C4 to F4 ($1B-$20)
+	dw $012D, $011C, $010C, $00FD, $00EF, $00E2 	; F#4 to B4 ($20-$26)
+	dw $00D2, $00C9, $00BD, $00B3, $00A9, $009F	; C5 to F5 ($27-$2C)
+	dw $0096, $008E, $0086, $007E, $0077, $0070 	; F#5 to B5 ($2D-$32)
+	dw $006A, $0064, $005E, $0059, $0054, $004F	; C6 to F6 ($33-$38)
+	dw $004B, $0046, $0042, $003F, $003B, $0038 	; F#6 to B6 ($39-$3E)
+	dw $0034, $0031, $002F, $002C, $0029, $0027	; C7 to F7 ($3F-$45)
+	dw $0025, $0023, $0021, $001F, $001D, $001B 	; F#7 to B7 ($46-$4A)
+	dw $001A, $0018, $0017, $0015, $0014, $0013	; C8 to F8 ($4B-$50)
+	dw $0012, $0011, $0010, $000F, $000E, $000D 	; F#8 to B8 ($51-$56)
+	dw $000C, $000C, $000B, $000A, $000A, $0009, $0008 ; C9 to F#9 ($57-$5D)
+</code></pre>
+
 (example coming soon!)
 
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
