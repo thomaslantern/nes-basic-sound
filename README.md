@@ -87,7 +87,7 @@ notes:
 	dw $000C, $000C, $000B, $000A, $000A, $0009, $0008 ; C9 to F#9 ($57-$5D)
 </code></pre>
 
-To use this table, we must be a bit careful. Because each of these notes is a word (2 bytes), the way we access them requires us to double the number of the note required to actually access the right data from the table. We also want to put this value into our x register so we can index to the correct note. For example, if we want the first note, we need to store 2 in x:
+To use this table, we must be a bit careful. Because each of these notes is a word (2 bytes), the way we access them requires us to double the number of the note required to actually access the right data from the table. We also want to put this value into our x register so we can index to the correct note. For example, if we want the second note, we need to store 2 in x:
 <pre><code>
 	ldx #2 		; Store 2 in x register
 	lda notes,x 	; Load the bottom value of the first note
@@ -95,6 +95,8 @@ To use this table, we must be a bit careful. Because each of these notes is a wo
 	lda notes+1,x	; Load the upper value of the first note
 	sta $4003	; Store the upper half of the note
 </code></pre>
-(more detail on this soon!)
+
+Note that we have to write _notes+1_ to access the higher end of that second note, even though $4003 is where we store the higher half of the note value. I'm not exactly sure why this is (and there's probably a good reason!), but for now just take it on faith (and hopefully at some point this remark will be replaced by a coherent explanation!) 
+
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
