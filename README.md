@@ -100,11 +100,21 @@ Note that we have to write _notes+1_ to access the higher end of that second not
 
 Of course, writing all of our code this way wouldn't be practical, and we would very quickly run out of space on our NES cartridge simply playing a few notes. If we're going to play a series of notes (a song), we're going to need a loop of some kind. So rather than loading a particular number into our x register, we need to construct another table of values to load into it:
 <pre><code>
+; Basic idea for song_notes table
 song_notes:
 	db 1, 3, 4, 5, 6, 2, 2, 1
 	db 3, 5, 2, 3, 5, 7, 2, 3
 	db 4, 4, 2, 4, 3, 2, 4, 1
 	db 4, 4, 2, 4, 4, 4, 1, 1
+</code></pre>
+
+This solves the problem of efficiency, but not readability. To make this even more clear, and easier to read in the future, we should create some labels for our notes. Near the beginning of the program (after our header), we'll want something like the following (please see the code for this tutorial for the full example):
+<pre><code>
+; Labels for note names
+A1 equ $00
+As1 equ $01  ; 's' for "sharp" (i.e. A#)
+B1 equ $02
+; etc...
 </code></pre>
 
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
