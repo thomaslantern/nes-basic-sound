@@ -86,7 +86,7 @@ notes:
 	dw $0012, $0011, $0010, $000F, $000E, $000D 	; F#8 to B8 ($51-$56)
 	dw $000C, $000C, $000B, $000A, $000A, $0009, $0008 ; C9 to F#9 ($57-$5D)
 </code></pre>
-
+[_Related sidenote: if you don't understand the naming and numbering of the notes, please see [this music theory page.](https://www.allaboutmusictheory.com/piano-keyboard/music-note-names/)_]
 To use this table, we must be a bit careful. Because each of these notes is a word (2 bytes), the way we access them requires us to double the number of the note required to actually access the right data from the table. We also want to put this value into our x register so we can index to the correct note. For example, if we want the second note, we need to store 2 in x:
 <pre><code>
 	ldx #2 		; Store 2 in x register
@@ -116,6 +116,16 @@ As1 equ $01  ; 's' for "sharp" (i.e. A#)
 B1 equ $02
 ; etc...
 </code></pre>
+
+Now, with our labels in place, we can write a look-up table that is a little easier to understand and read:
+<pre><code>
+; Basic idea for song_notes table
+song_notes:
+	db C3, C3, G3, G3, A3, A3, G3
+	db F3, F3, E3, E3, D3, D3, C3
+	; etc...
+</code></pre>
+
 
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
