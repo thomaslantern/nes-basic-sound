@@ -126,6 +126,26 @@ song_notes:
 	; etc...
 </code></pre>
 
+Doing this also allows us to write code that is: a) easier to read, and b) more efficient (looping):
+<pre><code>
+; (This is a code snippet straight from basicsound.asm)
+; Load up a new note		
+	ldx ntnum
+	lda birthday_length,x
+	sta sqlen	; Length of new note (this ticks down every clock cycle)
+
+	ldx ctnt	; This loads the current note 
+
+	txa		; We transfer to accumulator so we can easily double it
+	asl		; Double value since using words with our notes
+	tax		; Put back in x-register
+
+	lda notes,x
+	sta $4002
+	lda notes+1,x
+	sta $4003
+	
+</code></pre>
 
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
