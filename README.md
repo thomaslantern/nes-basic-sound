@@ -108,7 +108,7 @@ song_notes:
 	db 4, 4, 2, 4, 4, 4, 1, 1
 </code></pre>
 
-This solves the problem of efficiency, but not readability. To make this even more clear, and easier to read in the future, we should create some labels for our notes. Near the beginning of the program (after our header), we'll want something like the following (please see the code for this tutorial for the full example):
+This solves the problem of efficiency, but not readability. To make our code even more clear, we should create some labels for our notes. Near the beginning of the program (after our header), we'll want something like the following (please see the [code](basicsound.asm) for this tutorial for the full example):
 <pre><code>
 ; Labels for note names
 A1 equ $00
