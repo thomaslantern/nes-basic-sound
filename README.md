@@ -146,6 +146,10 @@ Doing this also allows us to write code that is: a) easier to read, and b) more 
 	sta $4003
 	
 </code></pre>
+In this snippet of code, we are doing a couple of things:
+1) (details soon...)
+
+(more soon!)
 
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
 
