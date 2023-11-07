@@ -147,8 +147,11 @@ Doing this also allows us to write code that is: a) easier to read, and b) more 
 	
 </code></pre>
 In this snippet of code, we are doing a couple of things:
-1) (details soon...)
+1) **ldx ntnum**: loading the current note number (which incrememts every time we play a new note)
+2) **lda birthday_length,x**: loading the appropriate note length using the birthday_length LUT and ntnum
+After that we load the current note which is stored in **ctnt**. Then (as the notes above suggest) we load into the accumulator (txa), double it (asl), and transfer it back to the x-register (tax). Remember, the doubling allows us to work properly with words instead of bytes (our notes are word-sized because they take up two bytes).
 
+This should make more sense. If it helps, look at the code in the context of the entire program. Remember to read slowly, chip away at it. Don't ever worry if you don't completely understand the code; the goal is, at a minimum, to just try to understand a little more of the code each time. You can do it!
 (more soon!)
 
 (more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
