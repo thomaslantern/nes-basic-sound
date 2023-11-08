@@ -152,7 +152,14 @@ In this snippet of code, we are doing a couple of things:
 After that we load the current note which is stored in **ctnt**. Then (as the notes above suggest) we load into the accumulator (txa), double it (asl), and transfer it back to the x-register (tax). Remember, the doubling allows us to work properly with words instead of bytes (our notes are word-sized because they take up two bytes).
 
 This should make more sense. If it helps, look at the code in the context of the entire program. Remember to read slowly, chip away at it. Don't ever worry if you don't completely understand the code; the goal is, at a minimum, to just try to understand a little more of the code each time. You can do it!
-(more soon!)
 
-(more coming soon! but while you wait for info, go here and top up your knowledge: https://www.nesdev.org/wiki/APU_basics)
+This readme, coupled with the commenting in the code, should be of help when deciphering the meaning of everything, so you can make modifications and create your own musical masterpieces. Be sure to check out my other tutorials on NES/ASM6502 programming, ideally in the following order:
+1) NES Hello World: https://github.com/thomaslantern/nes-hello-world/
+2) NES Basic Graphics: https://github.com/thomaslantern/nes-basic-graphics/
+3) NES Basic Sound (this one!)
+4) NES Basic Controls: https://github.com/thomaslantern/nes-basic-controls
+5) NES First Game! (Birthday Blast): https://github.com/thomaslantern/nes-birthday-blast
 
+As always, feel free to go here and top up your knowledge on the things I haven't covered: https://www.nesdev.org/wiki/APU_basics)
+
+Happy Coding!
